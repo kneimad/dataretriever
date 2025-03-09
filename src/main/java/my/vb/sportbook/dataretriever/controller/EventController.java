@@ -6,9 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.vb.sportbook.dataretriever.dto.EventDTO;
-import my.vb.sportbook.dataretriever.model.Event;
 import my.vb.sportbook.dataretriever.service.EventService;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
