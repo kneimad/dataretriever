@@ -1,7 +1,9 @@
 package my.vb.sportbook.dataretriever.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +16,8 @@ import java.util.List;
 @Data
 @Builder
 @TypeAlias("Event")
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "events")
 public class Event implements IndexedEntity {
     @Id

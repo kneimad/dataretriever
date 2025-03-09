@@ -14,6 +14,10 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
+/**
+ * REST controller for handling requests related to events.
+ * Provides endpoints for retrieving event details and non-settled events.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/event")
