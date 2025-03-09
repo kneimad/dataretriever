@@ -5,6 +5,7 @@ import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.SerializerConfig;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 import my.vb.sportbook.dataretriever.dto.EventDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +13,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HazelcastConfig {
 
-    private static final String CACHE_NAME = "entitiesCache";
-    private static final int TTL_SECONDS = 15;
+    @Value("${cache.entities.name}")
+    private String entitiesCacheName;
+
+    @Value("${cache.collection-entities.name}")
+    private String collectionEntitiesCacheName;
+
+    @Value("${cache.ttl.seconds}")
+    private int ttlSeconds;
+
 
     @Bean
     public com.hazelcast.core.HazelcastInstance hazelcastInstance() {
         Config config = new Config();
-        config.addMapConfig(createEntitiesCacheConfig());
+        config.addMapConfig(createEntitiesCacheConfig())
+              .addMapConfig(createCollectionEntitiesCacheConfig());
 
         SerializerConfig serializerConfig = new SerializerConfig()
                 .setTypeClass(EventDTO.class)
@@ -36,8 +45,14 @@ public class HazelcastConfig {
 
     private MapConfig createEntitiesCacheConfig() {
         return new MapConfig()
-                .setName(CACHE_NAME)
-                .setTimeToLiveSeconds(TTL_SECONDS);
+                .setName(entitiesCacheName)
+                .setTimeToLiveSeconds(ttlSeconds);
+    }
+
+    private MapConfig createCollectionEntitiesCacheConfig() {
+        return new MapConfig()
+                .setName(collectionEntitiesCacheName)
+                .setTimeToLiveSeconds(ttlSeconds);
     }
 }
 

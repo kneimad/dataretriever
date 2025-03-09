@@ -31,14 +31,5 @@ public class MarketDTO implements Serializable {
         this.outcomes = market.getOutcomes().stream().map(OutcomeDTO::new).toList();
     }
 
-    public Market convertTo() {
-        return Market.builder()
-                .id(id)
-                .description(description)
-                .status(status)
-                .settled(settled)
-                .outcomes(outcomes.stream().map(OutcomeDTO::convertTo).toList())
-                .build();
-    }
 }
 

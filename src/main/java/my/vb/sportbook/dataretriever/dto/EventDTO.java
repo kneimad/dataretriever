@@ -29,7 +29,7 @@ public class EventDTO implements Serializable {
 
     private List<MarketDTO> markets;
 
-    public EventDTO(Event event) {
+    public EventDTO(Event event, Boolean excludeMarkets) {
         this.id = event.getId();
         this.description = event.getDescription();
         this.homeTeam = event.getHomeTeam();
@@ -39,21 +39,7 @@ public class EventDTO implements Serializable {
         this.country = event.getCountry();
         this.competition = event.getCompetition();
         this.settled = event.isSettled();
-        this.markets = event.getMarkets().stream().map(MarketDTO::new).toList();
+        this.markets = (excludeMarkets==null || !excludeMarkets) ? event.getMarkets().stream().map(MarketDTO::new).toList() : null;
     }
 
-    public Event convertTo(){
-        return Event.builder()
-                .id(id)
-                .description(description)
-                .homeTeam(homeTeam)
-                .awayTeam(awayTeam)
-                .startTime(startTime)
-                .sport(sport)
-                .country(country)
-                .competition(competition)
-                .settled(settled)
-                .markets(markets.stream().map(MarketDTO::convertTo).toList())
-                .build();
-    }
 }

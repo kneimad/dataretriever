@@ -14,9 +14,15 @@ public class CacheController {
         this.cacheInspector = cacheInspector;
     }
 
-    @GetMapping("/cache/status")
+    @GetMapping("/entitiesCache/status")
     public ResponseEntity<String> getCacheStatus() {
-        String status = cacheInspector.getCacheStatus();
+        String status = cacheInspector.getEntityCacheStatus();
+        return ResponseEntity.ok(status);
+    }
+
+    @GetMapping("/collectionEntitiesCache/status")
+    public ResponseEntity<String> getCollectionEntityCacheStatus() {
+        String status = cacheInspector.getCollectionEntityCacheStatus();
         return ResponseEntity.ok(status);
     }
 

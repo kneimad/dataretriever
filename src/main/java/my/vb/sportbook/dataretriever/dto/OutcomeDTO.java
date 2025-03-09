@@ -31,13 +31,4 @@ public class OutcomeDTO implements Serializable {
         this.result = outcome.getResult();
     }
 
-    public Outcome convertTo(){
-        return Outcome.builder()
-                .id(id)
-                .description(description)
-                .settled(settled)
-                .price(price)
-                .result(result)
-                .build();
-    }
 }

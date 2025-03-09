@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DatabaseHealthIndicator implements HealthIndicator {
 
-    public static final String MYDATABASE = "mydatabase";
+    public static final String MYDATABASE = "sportbook";
     private final MongoClient mongoClient;
 
 
