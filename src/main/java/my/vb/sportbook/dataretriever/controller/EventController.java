@@ -1,5 +1,8 @@
 package my.vb.sportbook.dataretriever.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.vb.sportbook.dataretriever.dto.EventDTO;
@@ -21,12 +24,21 @@ import static org.springframework.http.HttpStatus.OK;
 @Slf4j
 @RestController
 @RequestMapping("/event")
+@Tag(name = "Event Controller", description = "Endpoints for managing and retrieving event data")
 @RequiredArgsConstructor
 public class EventController {
 
     private final EventService eventService;
 
     @GetMapping("/find/{id}")
+    @Operation(
+            summary = "Find Event by ID",
+            description = "Fetches an event using its unique ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Event retrieved successfully"),
+                    @ApiResponse(responseCode = "404", description = "Event not found")
+            }
+    )
     public ResponseEntity<EventDTO> findById(@PathVariable(name = "id") Long id) {
         log.info("Fetching entity with ID: {}", id);
         EventDTO entity = eventService.findById(id);
@@ -39,10 +51,17 @@ public class EventController {
     }
 
     @GetMapping("/findAllNonSettled")
+    @Operation(
+            summary = "Find All Non-Settled Events",
+            description = "Fetches a list of all non-settled events optionally filtered by sport and sorted by start time",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Non-settled events retrieved successfully"),
+                    @ApiResponse(responseCode = "404", description = "No non-settled events found")
+            }
+    )
     public ResponseEntity<List<EventDTO>> findAllNonSettledWithParams(
-                                                  @RequestParam(required = false, name = "sport") String sport,
-                                                  @RequestParam(required = false, defaultValue = "false", name = "sortedByStartTime") Boolean sortedByStartTime)
-    {
+            @RequestParam(required = false, name = "sport") String sport,
+            @RequestParam(required = false, defaultValue = "false", name = "sortedByStartTime") Boolean sortedByStartTime) {
         log.info("Fetching all non settles Events with excludeMarkets filtered by sport: {} sorted by StartTime {}", sport, sortedByStartTime);
         List<EventDTO> eventDTOS = eventService.nonSettledEvents(sport, sortedByStartTime);
         if (eventDTOS == null) {
